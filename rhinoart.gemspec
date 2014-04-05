@@ -30,4 +30,5 @@ Gem::Specification.new do |s|
   
   s.add_dependency "mini_magick"
   s.add_dependency "carrierwave"
+  s.add_dependency 'globalize', '~> 4.0.1'
 end

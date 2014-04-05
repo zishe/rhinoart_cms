@@ -27,5 +27,7 @@ module Rhinoart
 		#validates :path, presence: true, :uniqueness => { :scope => :gallery_id }
 
 		mount_uploader :path, Rhinoart::GalleryImageUploader
+
+		translates :annotation
 	end
 end

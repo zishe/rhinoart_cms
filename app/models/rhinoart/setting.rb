@@ -20,7 +20,6 @@ module Rhinoart
 			:format => { :with => /\A[-_a-zA-Z0-9]+\z/ }
 		validates :name, :length => { :in => 2..150 }
 		validates :value, :length => { :in => 2..250 }
-		
 		private
 
 			def name_downcase
