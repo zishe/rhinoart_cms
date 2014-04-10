@@ -27,8 +27,6 @@ module Rhinoart
 
 		validates :ftype, inclusion: { in: FIELD_TYPES.keys.map(&:to_s) }
 	
-		mount_uploader :path, Rhinoart::FileUploader
-
 		translates :value
 
 		def select_list

@@ -2,7 +2,6 @@ class AddGalleryImageTranslation < ActiveRecord::Migration
   def self.up
     Rhinoart::GalleryImage.create_translation_table!({
       :annotation => :text,
-      :path => :string,
     }, {
       :migrate_data => true
     })
