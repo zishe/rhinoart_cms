@@ -17,6 +17,6 @@ module Rhinoart
 
 		def file_url
 			file.try(:url)
-		end		
+		end	
 	end
 end

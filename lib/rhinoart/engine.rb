@@ -10,7 +10,5 @@ module Rhinoart
     require 'bootstrap-datepicker-rails'
     require 'globalize'
     require 'will_paginate'
-
-    require "rhinoart/utils"
   end
 end

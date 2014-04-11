@@ -110,7 +110,8 @@ module Rhinoart
 
 		def showhide
 			page = Page.find(params[:id])
-			page.update_attributes( :active => !page.active? )
+			page.update_attributes( :active => !page.active?)
+			#page.update_attributes( :active => page.active.to_i == 1 ? false : true)
 
 			redirect_back_or pages_path
 		end

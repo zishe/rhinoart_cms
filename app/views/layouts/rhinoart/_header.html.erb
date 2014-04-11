@@ -11,6 +11,17 @@
             <!-- start: Header Menu -->
             <div class="nav-no-collapse header-nav">
                 <ul class="nav pull-right">
+                    <li class="dropdown">
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                            <%= I18n.locale.to_s.humanize %>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><%= link_to 'Eng' , root_path(:en) %></li>
+                            <li><%= link_to 'Rus' , root_path(:ru) %></li>
+                        </ul>
+                    </li>                    
+
                     <% if has_role?('ROLE_ADMIN') %>
                     <li><%= link_to raw('<i class="halflings-icon white wrench"></i>'), settings_path %></li>
                     <% end %>

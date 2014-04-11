@@ -20,6 +20,8 @@
 #
 module Rhinoart
   class Page < ActiveRecord::Base
+    require "rhinoart/utils"
+    
     before_validation :name_to_slug
     after_initialize :set_publish_date   
 
@@ -53,7 +55,7 @@ module Rhinoart
     default_scope { order 'position asc' }
     acts_as_list  :scope => [:parent_id, :publish_date]
 
-    translates :name, :active
+    translates :name
 
 
 
