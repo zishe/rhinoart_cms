@@ -70,8 +70,13 @@ module Rhinoart
     alias_method :content, :content_by_name
 
     def field_by_name(name)
-      if self.page_field.find_by(name: name).present?
-        self.page_field.find_by(name: name).value 
+      field = self.page_field.find_by(name: name)
+      if field.present?
+        if field.ftype != PageField::FIELD_TYPES[:file].downcase
+          field.value 
+        else
+          field.attachment.try(:file_url)
+        end
       else
         ''
       end
