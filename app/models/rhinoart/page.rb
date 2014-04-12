@@ -83,6 +83,10 @@ module Rhinoart
     end
     alias_method :field, :field_by_name
 
+    def field_obj(name)
+      self.page_field.find_by(name: name) if self.page_field.find_by(name: name).present?
+    end
+
     def children(active = true)
       if active
         Page.where('parent_id = ? AND active = true', self.id)

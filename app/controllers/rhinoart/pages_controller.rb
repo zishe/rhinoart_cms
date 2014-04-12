@@ -4,23 +4,35 @@ require_dependency "rhinoart/application_controller"
 module Rhinoart
 	class PagesController < ApplicationController		
 		before_action :set_rhinoart_page, only: [:edit, :update, :destroy]
+		before_action :set_tree_ids, only: [:index, :children, :edit]
 		before_filter { access_only_roles %w[ROLE_ADMIN ROLE_EDITOR] }
 
 
-		def index(parent = nil)
+		def index
 			store_location
-			if parent.blank?
-				@pages = Page.paginate(page: params[:page]).where("parent_id IS NULL AND active = ?", true)	
+			if params[:parent].present?
+				@pages = Page.paginate(page: params[:page]).where("parent_id = ?", params[:parent]) #if parent.ptype == 'page'
 			else
-				@pages = Page.paginate(page: params[:page]).where("parent_id = ?", parent.id) if parent.ptype == 'page'
-			end			
+				@pages = Page.paginate(page: params[:page]).where("parent_id IS NULL AND active = ?", true)	
+			end		
+
+			respond_to do |format|
+				format.html { }
+				format.js { }
+			end					
 		end
 
 		def children
 			store_location
 
 			@parent = Page.find(params[:parent_id])
-			@pages = Page.where("parent_id = ?", params[:parent_id]).order('publish_date DESC')
+			@pages = Page.where("parent_id = ?", params[:parent_id]) #.order('publish_date DESC')
+			@level = params[:level]
+			
+			respond_to do |format|
+				format.html { }
+				format.js { }
+			end			
 		end
 
 		def new
@@ -147,11 +159,17 @@ module Rhinoart
 	        # Use callbacks to share common setup or constraints between actions.
 	        def set_rhinoart_page
 	            @page = Page.find(params[:id])
+	            #@page.page_field.build(attachment: Rhinoart::Files.new )
 	        end
 
 	        # Never trust parameters from the scary internet, only allow the white list through.
 	        def admin_pages_params
-	            params.require(:page).permit!
+	            #params.require(:page).permit!
+	            params[:page].permit! # TODO
+	        end
+
+	        def set_tree_ids
+	        	@tree_ids = cookies[:tree_ids].split(',').map { |s| s.to_i } if cookies[:tree_ids].present?
 	        end
 
 			def content_tabs(page, names=%w[main_content])
