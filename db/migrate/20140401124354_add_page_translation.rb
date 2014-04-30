@@ -2,7 +2,6 @@ class AddPageTranslation < ActiveRecord::Migration
   def self.up
     Rhinoart::Page.create_translation_table!({
       :name => :string,
-      :active => :string,
     }, {
       :migrate_data => true
     })
