@@ -9,31 +9,31 @@
 #
 
 module Rhinoart
-	class Setting < ActiveRecord::Base
-		before_save :name_downcase
+  class Setting < ActiveRecord::Base
+    before_save :name_downcase
 
-		#attr_accessible :name, :value, :descr
+    #attr_accessible :name, :value, :descr
 
-		default_scope { order 'name' }
+    default_scope { order 'name' }
 
-		validates :name, uniqueness: { case_sensitive: false }, 
-			:format => { :with => /\A[-_a-zA-Z0-9]+\z/ }
-		validates :name, :length => { :in => 2..150 }
-		# validates :value
-		has_paper_trail
-		
+    validates :name, uniqueness: { case_sensitive: false },
+              :format            => { :with => /\A[-_a-zA-Z0-9]+\z/ }
+    validates :name, :length => { :in => 2..150 }
+    # validates :value
+    has_paper_trail
 
-		private
 
-			def name_downcase
-				self.name = self.name.downcase
-			end
+    private
 
-			def self.get(name, default = nil)
-				find_by_name(name).try(:value) || default
-			end
+    def name_downcase
+      self.name = self.name.downcase
+    end
 
-	end
+    def self.get(name, default = nil)
+      find_by_name(name).try(:value) || default
+    end
+
+  end
 end
 
 # HOWTO: Make settings through cache

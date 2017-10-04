@@ -1,7 +1,7 @@
 #encoding: utf-8
 module Rhinoart
   module ViewHelpers
-	  module PagesHelper
+    module PagesHelper
 
       # Returns the full title on a per-page basis.
       def full_title(page_title)
@@ -100,5 +100,5 @@ module Rhinoart
         CODE
       end
     end
-	end
+  end
 end

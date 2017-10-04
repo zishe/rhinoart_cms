@@ -58,18 +58,20 @@ module Rhinoart
     has_paper_trail
 
     TUPES = {
-      page: 'Page',
-      article: 'Article',
-      blog: 'Blog',
-      testimonial: 'Testimonial'
+        page:        'Page',
+        article:     'Article',
+        blog:        'Blog',
+        testimonial: 'Testimonial'
     }.freeze
-    def content_by_name(name='main_content')
+
+    def content_by_name(name = 'main_content')
       if page_content.find_by(name: name).present?
         page_content.find_by(name: name).content
       else
         ''
       end
     end
+
     alias content content_by_name
 
     def field_by_name(name)
@@ -84,6 +86,7 @@ module Rhinoart
         ''
       end
     end
+
     alias field field_by_name
 
     def field_obj(name)
@@ -126,20 +129,20 @@ module Rhinoart
 
     def set_publish_date
       self.publish_date = Time.now unless publish_date.present?
-      end
+    end
 
     def name_to_slug
       if !slug.present?
         if parent_id.present?
-          parent = Page.find_by(id: parent_id)
+          parent    = Page.find_by(id: parent_id)
           self.slug = parent.slug + "/" + Rhinoart::Utils.to_slug(name)
         else
           self.slug = Rhinoart::Utils.to_slug(name)
         end
       else
         self.slug = Rhinoart::Utils.to_slug(slug)
-        end
       end
+    end
 
     class << self
       def find_by_path(path)

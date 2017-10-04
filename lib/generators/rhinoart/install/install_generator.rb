@@ -37,13 +37,13 @@ module Rhinoart
       inject_into_file 'config/application.rb', before: /end$/ do
         "\n  # Replace of yours\n"
         "\n  config.help_file_path = \"#{Rails.public_path}/help.pdf\"\n"
-      end          
+      end
       inject_into_file 'config/environments/development.rb', before: /end$/ do
         "\n  config.redirect_to_www = false\n"
-      end          
+      end
       inject_into_file 'config/environments/production.rb', before: /end$/ do
         "\n  config.redirect_to_www = true\n"
-      end          
+      end
     end
   end
 end

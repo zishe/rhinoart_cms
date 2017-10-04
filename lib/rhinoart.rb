@@ -23,30 +23,30 @@ module Rhinoart
   setting('device_namespace', :users)
 
   setting('devise_controllers', {
-    sessions: 'rhinoart/sessions',
-    passwords: 'rhinoart/passwords',
-    omniauth_callbacks: 'rhinoart/omniauth_callbacks'
+      sessions:           'rhinoart/sessions',
+      passwords:          'rhinoart/passwords',
+      omniauth_callbacks: 'rhinoart/omniauth_callbacks'
   })
 
   setting('devise_routes', {
-    class_name: 'Rhinoart::User',
-    module: :devise,
-    controllers: Rhinoart.devise_controllers
+      class_name:  'Rhinoart::User',
+      module:      :devise,
+      controllers: Rhinoart.devise_controllers
   })
 
   setting('devise_scopes', [
-    :database_authenticatable, 
-    :recoverable, 
-    :registerable, 
-    :trackable, 
-    :validatable, 
-    :omniauthable, 
-    :omniauth_providers => [:google_oauth2]
+      :database_authenticatable,
+      :recoverable,
+      :registerable,
+      :trackable,
+      :validatable,
+      :omniauthable,
+      :omniauth_providers => [:google_oauth2]
   ])
 
   setting :copyrights, {
-    name: 'RhinoArt',
-    url: 'http://www.rhinoart.ru',    
+      name: 'RhinoArt',
+      url:  'http://www.rhinoart.ru',
   }
 end
 

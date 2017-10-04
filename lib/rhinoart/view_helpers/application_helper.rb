@@ -66,5 +66,5 @@ module Rhinoart
         end.join("\n").html_safe
       end
     end
-	end
+  end
 end

@@ -1,7 +1,5 @@
-
 module Rhinoart
   module Menu
-
   end
 end
 
