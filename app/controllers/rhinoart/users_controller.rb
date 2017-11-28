@@ -46,6 +46,7 @@ module Rhinoart
     def create
       @user = User.new(user_attributes)
       if @user.save
+        confirm
         flash[:success] = t("_WELCOME")
         redirect_to users_path
       else
@@ -69,6 +70,8 @@ module Rhinoart
       #   rescue
       #   end
       # end
+
+      confirm
 
       if @user.update_attributes(new_attributes)
         redirect_to (params[:redirect_to] || :users), success: "User created"
@@ -94,6 +97,10 @@ module Rhinoart
 
     private
 
+    def confirm
+      @user.confirmed_at = DateTime.now if @user.respond_to?(:confirmed_at) && @user.confirmed_at.nil?
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = Rhinoart::User.find(params[:id])
@@ -103,7 +110,7 @@ module Rhinoart
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_attributes
-      params.require(:user).permit! 
+      params.require(:user).permit!
     end
   end
 end
