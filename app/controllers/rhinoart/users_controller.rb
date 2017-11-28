@@ -10,21 +10,21 @@ module Rhinoart
 
       @users = if params[:role].present?
                  case params[:role]
-                 when 'new'
-                   Rhinoart::User.where(approved: false).paginate(page: params[:page], per_page: 30).order(order_str)
+                   when 'new'
+                     Rhinoart::User.where(approved: false).paginate(page: params[:page], per_page: 30).order(order_str)
 
-                 when 'admin'
-                   # @users = []
-                   # User::ADMIN_PANEL_ROLES.each do |r|
-                   # 	@users << User.with_any_role(r)
-                   # end
-                   # @users = @users[0]
-                   # @users = User.where("approved = 1 and (admin_role is not null or admin_role != '')").paginate(page: params[:page], per_page: 30).order(order_str)
+                   when 'admin'
+                     # @users = []
+                     # User::ADMIN_PANEL_ROLES.each do |r|
+                     # 	@users << User.with_any_role(r)
+                     # end
+                     # @users = @users[0]
+                     # @users = User.where("approved = 1 and (admin_role is not null or admin_role != '')").paginate(page: params[:page], per_page: 30).order(order_str)
 
-                   Rhinoart::User.admin_users.paginate(page: params[:page], per_page: 30).order(order_str)
-                 # User.joins(:rhinoart_users_roles, :roles).where(approved: true, roles: {name: User::ADMIN_PANEL_ROLES}).group(:email).paginate(page: params[:page], per_page: 30).order(order_str)
-                 else
-                   Rhinoart::User.all.paginate(page: params[:page], per_page: 30).order(order_str)
+                     Rhinoart::User.admin_users.paginate(page: params[:page], per_page: 30).order(order_str)
+                   # User.joins(:rhinoart_users_roles, :roles).where(approved: true, roles: {name: User::ADMIN_PANEL_ROLES}).group(:email).paginate(page: params[:page], per_page: 30).order(order_str)
+                   else
+                     Rhinoart::User.all.paginate(page: params[:page], per_page: 30).order(order_str)
                  end
                else
                  if params[:q].present?
@@ -98,7 +98,9 @@ module Rhinoart
     private
 
     def confirm
-      @user.confirmed_at = DateTime.now if @user.respond_to?(:confirmed_at) && @user.confirmed_at.nil?
+      @user.update("confirmed_at = '#{DateTime.now}'")
+    rescue
+      Rails.logger.warn 'user wanst confirmed'
     end
 
     # Use callbacks to share common setup or constraints between actions.
