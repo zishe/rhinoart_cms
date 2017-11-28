@@ -27,12 +27,12 @@
   .span2
     current_sign_in_at:
   .span5
-    = @user.current_sign_in_at.strftime("%m/%d/%Y %H:%M")
+    = @user.current_sign_in_at&.strftime("%m/%d/%Y %H:%M")
 .row-fluid
   .span2
     last_sign_in_at:
   .span5
-    = @user.last_sign_in_at.strftime("%m/%d/%Y %H:%M")
+    = @user.last_sign_in_at&.strftime("%m/%d/%Y %H:%M")
 
 .row-fluid
   .span2
