@@ -32,13 +32,18 @@
                 %i.fa-icon-remove
                 Deny Access
             - else
-              = link_to user_path(user, user: {approved: true}, redirect_to: request.fullpath), method: :patch, data: { confirm: "Are you sure that you want to confirm that user?" }, class: "btn btn-small btn-success" do
-                %i.fa-icon-ok{ style: 'clolor:red;' }
+              = link_to user_path(user, user: { approved: true }, redirect_to: request.fullpath), method: :patch, data: { confirm: "Are you sure that you want to confirm that user?" }, class: "btn btn-small btn-success" do
+                %i.fa-icon-ok{ style: 'color:red;' }
                 Grant Access
 
             = link_to edit_user_path(user, redirect_to: request.fullpath), class: "btn btn-small" do
               %i.fa-icon-pencil
               Edit
+
+            - if user.respond_to?(:confirmed_at) && user.confirmed_at.nil?
+              = link_to user_path(user, user: { confirmed_at: DateTime.now }, redirect_to: request.fullpath), method: :patch, data: { confirm: "Are you sure that you want to confirm that user?" }, class: "btn btn-small btn-success" do
+                %i.fa-icon-ok{ style: 'color:blue;' }
+                Confirm
 
           %td= link_to user.name, edit_user_path(user, redirect_to: request.fullpath)
           %td= user.email

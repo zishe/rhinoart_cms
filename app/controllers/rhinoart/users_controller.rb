@@ -46,7 +46,6 @@ module Rhinoart
     def create
       @user = User.new(user_attributes)
       if @user.save
-        confirm
         flash[:success] = t("_WELCOME")
         redirect_to users_path
       else
@@ -60,18 +59,6 @@ module Rhinoart
     def update
       new_attributes = user_attributes.to_hash.symbolize_keys
       new_attributes.delete(:password) if new_attributes[:password].blank?
-
-      # if new_attributes[:approved] && !new_attributes[:email].present?
-      # else
-      #   new_attributes[:admin_roles] = nil if !new_attributes[:admin_roles].present? && can?(:manage, :all)
-      #   begin
-      #   		@user.api_role
-      #   		new_attributes[:api_role] = nil if !new_attributes[:api_role].present? && can?(:manage, :all)
-      #   rescue
-      #   end
-      # end
-
-      confirm
 
       if @user.update_attributes(new_attributes)
         redirect_to (params[:redirect_to] || :users), success: "User created"
@@ -96,12 +83,6 @@ module Rhinoart
     end
 
     private
-
-    def confirm
-      @user.update("confirmed_at = '#{DateTime.now}'")
-    rescue
-      Rails.logger.warn 'user wanst confirmed'
-    end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_user
