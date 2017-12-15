@@ -6,7 +6,7 @@ module Rhinoart
     before_action :set_page_comment, only: [:edit, :update, :destroy]
 
     def index
-    	store_location
+      store_location
       @page_comments = PageComment.where('parent_id is null').order('page_id, approved, updated_at').paginate(page: params[:page])
     end
 
@@ -16,15 +16,15 @@ module Rhinoart
     def update
       if @page_comment.update(page_comment_params)
         flash[:info] = t('_PAGE_SUCCESSFULLY_UPDATED')
-        if params[:continue].present? 
+        if params[:continue].present?
           render action: "edit"
         else
           redirect_back_or page_comments_path
-        end      
+        end
       else
         render action: "edit"
-      end   
-    end  
+      end
+    end
 
     def destroy
       @page_comment.destroy
@@ -34,19 +34,19 @@ module Rhinoart
     end
 
     private
-        # Use callbacks to share common setup or constraints between actions.
-        def set_page_comment
-            begin
-                @page_comment = PageComment.find(params[:id])     
-            rescue 
-                render :template => 'site/not_found', :status => 404
-            end            
-        end
+    # Use callbacks to share common setup or constraints between actions.
+    def set_page_comment
+      begin
+        @page_comment = PageComment.find(params[:id])
+      rescue
+        render :template => 'site/not_found', :status => 404
+      end
+    end
 
-        # Never trust parameters from the scary internet, only allow the white list through.
-        def page_comment_params
-            params.require(:page_comment).permit(:comment, :approved)
-        end
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def page_comment_params
+      params.require(:page_comment).permit(:comment, :approved)
+    end
 
   end
 end

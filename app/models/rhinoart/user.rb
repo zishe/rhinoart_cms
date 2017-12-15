@@ -88,6 +88,7 @@ module Rhinoart
       end
       false
     end
+
     alias admin? has_access_to_admin_panel?
 
     def has_admin_role?(role)
@@ -101,6 +102,7 @@ module Rhinoart
     def has_access_to_frontend?
       FRONTEND_ROLES.any? { |role| roles.map(&:name).include?(role.to_s) }
     end
+
     alias frontend_user? has_access_to_frontend?
     alias has_frontend_role? has_role?
 
@@ -120,6 +122,7 @@ module Rhinoart
     def ability
       @ability ||= Ability.new(self)
     end
+
     delegate :can?, :cannot?, :to => :ability
 
     def clear_roles(roles)
@@ -134,14 +137,14 @@ module Rhinoart
 
       if user.present?
         user.password = Devise.friendly_token[0, 20]
-        user.token = access_token['credentials']['token']
+        user.token    = access_token['credentials']['token']
       else
         user = create(
-          name: data["name"],
-          email: data["email"],
-          password: Devise.friendly_token[0, 20],
-          token: access_token['credentials']['token'],
-          approved: true
+            name:     data["name"],
+            email:    data["email"],
+            password: Devise.friendly_token[0, 20],
+            token:    access_token['credentials']['token'],
+            approved: true
         )
       end
 
@@ -172,7 +175,7 @@ module Rhinoart
     def set_user_name
       if name_changed?
         self.first_name = name.split(' ').first
-        self.last_name = name.split(' ').last if first_name != name.split(' ').last
+        self.last_name  = name.split(' ').last if first_name != name.split(' ').last
       elsif first_name.present? && last_name.present?
         self.name = "#{first_name} #{last_name}"
       end
