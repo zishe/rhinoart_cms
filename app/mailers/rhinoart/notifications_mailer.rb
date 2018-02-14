@@ -11,7 +11,7 @@ module Rhinoart
 
     def new_user_welcome(user)
       @user = user
-      mail to: user.email, subject: "Welcome #{@user.name}!"
+      mail to: user.email, subject: "Welcome #{@user.name}"
     end
 
     def user_grant_access_notification(user)
