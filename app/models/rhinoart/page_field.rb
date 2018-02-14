@@ -16,19 +16,26 @@ module Rhinoart
     after_save :update_page_date
     after_destroy :update_page_date
 
-    belongs_to :page, :inverse_of => :page_field
+    belongs_to :page, inverse_of: :page_field
     accepts_nested_attributes_for :page
 
-    has_one :attachment, as: :attachable, class_name: "Rhinoart::Files", :autosave => true, :dependent => :destroy
+    has_one :attachment, as: :attachable, class_name: "Rhinoart::Files", autosave: true, dependent: :destroy
     accepts_nested_attributes_for :attachment, allow_destroy: true #, reject_if: :all_blank
 
     default_scope { order 'position' }
     acts_as_list scope: :page_id
 
-    FIELD_TYPES = { text: 'Text', textarea: 'Textarea', file: 'File', boolean: 'Bollean', title: 'Title', meta: 'Meta descr and key' }
+    FIELD_TYPES = {
+      text: 'Text',
+      textarea: 'Textarea',
+      file: 'File',
+      boolean: 'Bollean',
+      title: 'Title',
+      meta: 'Meta descr and key'
+    }
 
     validates :name, :ftype, presence: true
-    validates_uniqueness_of :name, :scope => :page_id
+    validates_uniqueness_of :name, scope: :page_id
 
     validates :ftype, inclusion: { in: FIELD_TYPES.keys.map(&:to_s) }
 
